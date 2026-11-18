@@ -5,292 +5,409 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>조성민 | Unity Client Programmer 이력서</title>
-<meta name="description" content="Unity 클라이언트 개발자 조성민의 이력서. 데이터 주도 설계, FSM, ScriptableObject 파이프라인, 5개 프로젝트 완주, STOVE 출시.">
+<meta name="description" content="Unity 클라이언트 개발자 조성민의 이력서. 게임 5편 완주, STOVE 출시, 데이터 주도 설계와 FSM, ScriptableObject 파이프라인.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
+@font-face{font-family:"DNFBitBit";src:url("fonts/DNFBitBit.woff2") format("woff2");font-display:swap}
+@font-face{font-family:"Maplestory";src:url("fonts/Maplestory-Light.woff2") format("woff2");font-weight:300 400;font-display:swap}
+@font-face{font-family:"Maplestory";src:url("fonts/Maplestory-Bold.woff2") format("woff2");font-weight:700 900;font-display:swap}
 :root{
-  --bg:#f7f6f3; --card:#ffffff; --ink:#1d1f23; --muted:#5d6470; --line:#e3e1db;
-  --accent:#2b5cff; --accent-soft:#e8edff; --chip:#efeee9;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#9aa3b2; --line:#2c313a;
-    --accent:#8aa4ff; --accent-soft:#232a45; --chip:#262a32;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#14161a; --card:#1c1f25; --ink:#eceef2; --muted:#9aa3b2; --line:#2c313a;
-  --accent:#8aa4ff; --accent-soft:#232a45; --chip:#262a32;
+  --bg:#050915; --panel:#0d1426; --panel2:#10182d; --line:#263450; --line2:#35435f;
+  --text:#f2f6ff; --muted:#b6c2d8; --text3:#8d9ab4;
+  --primary:#ff7d4d; --accent:#5fe0ca; --gold:#ffc63d;
+  --pixel:"Maplestory","Noto Sans KR",sans-serif; --bit:"DNFBitBit","Maplestory",monospace;
+  --sans:"Noto Sans KR",system-ui,-apple-system,"Malgun Gothic",sans-serif;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0; background:var(--bg); color:var(--ink);
-  font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
-  line-height:1.7; font-size:16px; -webkit-font-smoothing:antialiased;
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(circle at 1px 1px,rgba(120,150,210,.10) 1px,transparent 0);background-size:34px 34px}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4,p{margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:20;background:rgba(5,9,21,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:6px;height:60px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px;margin-right:14px;white-space:nowrap}
+.logo i{font-style:normal;display:grid;place-items:center;width:32px;height:32px;border:1px solid #6b3a2a;border-radius:8px;background:#1d1210;color:var(--primary);font-size:12px;font-family:var(--pixel)}
+.bar nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;min-width:0}
+.bar nav a{padding:6px 12px;border-radius:8px;color:var(--muted);font-weight:700;font-size:14px;white-space:nowrap}
+.bar nav a:hover{background:#1a2036;color:var(--text)}
+.bar .sp{flex:1}
+.pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:7px 16px;font-weight:700;font-size:13.5px;white-space:nowrap}
+.pill.ghost{border:1px solid var(--line2);background:#101a30;color:var(--text)}
+.pill.ghost::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.pill.solid{background:var(--primary);color:#1a0a04}
+.pill:hover{filter:brightness(1.12)}
+
+/* hero */
+.hero{padding:64px 0 36px}
+.hero .grid{display:grid;grid-template-columns:1.25fr .75fr;gap:32px;align-items:center}
+.tag{display:inline-block;border:1px solid #6b3a2a;background:#1d1210;color:#ffd9c9;border-radius:8px;padding:3px 12px;font-family:var(--pixel);font-size:12px;font-weight:700}
+.hero h1{font-family:var(--bit);font-weight:400;font-size:clamp(44px,8vw,84px);line-height:1.04;color:var(--primary);letter-spacing:.02em;margin:18px 0 14px;text-shadow:0 0 22px rgba(255,125,77,.55)}
+.role{font-size:24px;font-weight:900}
+.role b{color:var(--primary)}
+.lead{color:var(--muted);margin-top:14px;max-width:560px}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 18px;margin:22px 0 0;padding:0;list-style:none;font-size:14px;max-width:560px}
+.facts li{display:flex;gap:10px;min-width:0}
+.facts b{flex:none;width:64px;color:var(--text3);font-family:var(--pixel);font-size:12px;padding-top:2px}
+.facts span,.facts a{min-width:0;overflow-wrap:anywhere}
+.facts a{color:var(--accent)}
+.facts a:hover{text-decoration:underline}
+.facts .wide{grid-column:1/-1}
+.avatar{position:relative;display:grid;place-items:center;height:430px;margin-bottom:24px}
+.avatar::before{content:"";position:absolute;inset:6% 0 0;background:radial-gradient(circle at 50% 45%,rgba(255,125,77,.28),transparent 62%)}
+.avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;image-rendering:pixelated}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:26px 0 6px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 14px;text-align:center}
+.stat .n{font-family:var(--bit);font-size:30px;color:var(--gold);line-height:1.1;text-shadow:0 0 14px rgba(255,198,61,.3)}
+.stat .n small{font-family:var(--sans);font-size:13px;color:var(--muted);margin-left:2px}
+.stat .l{margin-top:6px;font-size:12.5px;color:var(--muted);line-height:1.45}
+
+/* sections */
+section.s{padding:56px 0 6px}
+.kick{display:flex;align-items:center;gap:10px;color:var(--accent);font-family:var(--pixel);font-size:13px;font-weight:700;letter-spacing:.08em}
+.kick::before{content:"";width:22px;height:3px;background:var(--primary);border-radius:2px}
+h2{font-size:clamp(26px,4vw,34px);font-weight:900;margin:8px 0 22px;letter-spacing:-.01em}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:24px 26px}
+.panel + .panel{margin-top:14px}
+.panel p+p{margin-top:12px}
+.traits{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:16px}
+.trait{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:14px;line-height:1.6;color:var(--muted);border-top:3px solid var(--primary)}
+.trait:nth-child(2n){border-top-color:var(--accent)}
+.trait:nth-child(3n){border-top-color:var(--gold)}
+
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;align-items:start}
+.skills .panel{padding:20px 22px}
+.skills h3{font-family:var(--pixel);font-size:13px;color:var(--primary);letter-spacing:.06em;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:#16203a;border:1px solid var(--line);color:#dfe8fb;border-radius:6px;padding:2px 10px;font-size:13px;line-height:1.7}
+.chip.hot{border-color:#6b3a2a;background:#241812;color:#ffd9c9}
+
+.intro-grid{display:grid;grid-template-columns:1fr;gap:14px}
+.panel h3{font-size:19px;font-weight:900;margin-bottom:12px}
+.str{display:grid;gap:14px;margin-top:14px}
+.str .item{display:grid;grid-template-columns:44px 1fr;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 22px}
+.str .no{font-family:var(--bit);font-size:30px;color:var(--primary);line-height:1;text-shadow:0 0 12px rgba(255,125,77,.4)}
+.str h4{font-size:16.5px;font-weight:900;margin-bottom:6px}
+.str p{color:var(--muted);font-size:14.5px}
+
+/* timeline */
+.tl{position:relative;padding-left:26px}
+.tl::before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--primary),var(--line))}
+.tl .it{position:relative}
+.tl .it::before{content:"";position:absolute;left:-26px;top:26px;width:16px;height:16px;border-radius:4px;background:var(--bg);border:3px solid var(--primary)}
+.tl .it+.it{margin-top:14px}
+.row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;align-items:baseline}
+.row h3{margin:0}
+.when{color:var(--gold);font-family:var(--pixel);font-size:13px;font-weight:700}
+.sub{color:var(--text3);font-size:13.5px;margin:2px 0 8px}
+ul.d{margin:8px 0 0;padding-left:19px}
+ul.d li{margin:4px 0;color:var(--muted);font-size:14.5px;line-height:1.7}
+ul.d li::marker{color:var(--primary)}
+
+/* projects */
+.proj{display:grid;grid-template-columns:260px 1fr;gap:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.proj + .proj{margin-top:16px}
+.proj .art{position:relative;background:#02040a;min-height:200px}
+.proj .art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:pixelated;opacity:.92}
+.proj .art::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 55%,var(--panel))}
+.proj .body{padding:22px 26px 24px}
+.proj h3{font-size:22px;font-weight:900}
+.proj h3 .en{display:block;font-family:var(--pixel);font-size:11.5px;color:var(--text3);letter-spacing:.14em;font-weight:700;margin-bottom:2px}
+.badge{display:inline-block;margin-left:8px;border:1px solid #6b3a2a;background:#241812;color:var(--gold);border-radius:6px;padding:0 9px;font-size:12px;font-weight:700;vertical-align:middle}
+.links{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0 2px;font-size:13px}
+.links a{color:var(--accent)}
+.links a:hover{text-decoration:underline}
+.role-box{margin:12px 0 4px;border-left:3px solid var(--accent);background:#0f1d2a;padding:6px 12px;font-size:14px;font-weight:700;border-radius:0 8px 8px 0;color:#d9fff7}
+.lab{font-family:var(--pixel);font-size:12px;font-weight:700;color:var(--primary);letter-spacing:.06em;margin:14px 0 2px}
+.proj .chips{margin-top:14px}
+
+footer{padding:56px 0 70px;color:var(--text3);font-size:13.5px}
+footer .wrap{border-top:1px solid var(--line);padding-top:22px}
+footer a{color:var(--accent)}
+
+@media (max-width:860px){
+  .hero .grid{grid-template-columns:1fr}
+  .avatar{order:-1;height:300px;margin-bottom:0}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stats .stat:last-child{grid-column:1/-1}
+  .proj{grid-template-columns:1fr}
+  .proj .art{height:150px;min-height:0}
+  .proj .art::after{background:linear-gradient(transparent 50%,var(--panel))}
+  .bar .pill.ghost{display:none}
 }
-a{color:var(--accent); text-decoration:none}
-a:hover{text-decoration:underline}
-.wrap{max-width:880px; margin:0 auto; padding:0 20px}
-header.top{padding:56px 0 28px}
-.kicker{font-size:13px; letter-spacing:.14em; color:var(--muted); text-transform:uppercase}
-h1{font-size:40px; line-height:1.2; margin:6px 0 4px}
-.role{font-size:20px; color:var(--accent); font-weight:600}
-.contact{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:6px 24px; margin:24px 0 0; padding:0; list-style:none}
-.contact li{display:flex; gap:10px; font-size:15px; overflow-wrap:anywhere}
-.contact b{min-width:72px; color:var(--muted); font-weight:600}
-nav.tabs{position:sticky; top:0; z-index:5; background:color-mix(in srgb,var(--bg) 88%,transparent); backdrop-filter:blur(8px); border-bottom:1px solid var(--line)}
-nav.tabs .wrap{display:flex; gap:4px; overflow-x:auto; padding-top:8px; padding-bottom:8px}
-nav.tabs a{white-space:nowrap; padding:6px 12px; border-radius:999px; color:var(--muted); font-size:14px}
-nav.tabs a:hover{background:var(--accent-soft); color:var(--accent); text-decoration:none}
-nav.tabs .sp{flex:1}
-section{padding:40px 0 8px}
-h2{font-size:24px; margin:0 0 18px; padding-bottom:10px; border-bottom:2px solid var(--ink)}
-h3{font-size:18px; margin:0 0 6px}
-.card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 24px; margin-bottom:16px}
-p{margin:0 0 12px}
-ul.dots{margin:8px 0 0; padding-left:20px}
-ul.dots li{margin:4px 0}
-.chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
-.chip{background:var(--chip); border-radius:6px; padding:2px 9px; font-size:13px; color:var(--muted)}
-.skills{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px}
-.skills h3{font-size:14px; color:var(--accent); letter-spacing:.06em; text-transform:uppercase}
-.skills ul{margin:0; padding-left:18px; font-size:15px}
-.meta{color:var(--muted); font-size:14px; margin-bottom:10px}
-.badge{display:inline-block; background:var(--accent-soft); color:var(--accent); border-radius:6px; padding:1px 9px; font-size:13px; font-weight:600; margin-left:6px; vertical-align:middle}
-.label{font-size:13px; font-weight:700; color:var(--muted); margin:14px 0 2px; letter-spacing:.04em}
-.proj-head{display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 16px; align-items:baseline}
-.proj-head .en{color:var(--muted); font-size:13px; letter-spacing:.1em}
-.rolebox{background:var(--accent-soft); color:var(--ink); border-radius:8px; padding:6px 12px; font-size:14px; font-weight:600; margin:10px 0 4px}
-.strength h3{font-size:16px}
-.links a{margin-right:12px; font-size:14px}
-footer{padding:48px 0 64px; color:var(--muted); font-size:14px}
-.theme{background:none; border:1px solid var(--line); color:var(--muted); border-radius:999px; padding:4px 12px; cursor:pointer; font-size:13px}
-@media (max-width:600px){ h1{font-size:32px} .card{padding:18px} header.top{padding-top:36px} }
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  .facts{grid-template-columns:1fr}
+  .panel{padding:20px 18px}
+  .proj .body{padding:18px 18px 20px}
+  .bar .logo span{display:none}
+  .str .item{grid-template-columns:34px 1fr}
+}
 @media print{
-  nav.tabs,.theme{display:none}
-  body{background:#fff; color:#000; font-size:12px}
-  .card{border:none; padding:0; break-inside:avoid}
-  section{padding-top:18px}
-  a{color:#000}
+  body{background:#fff;color:#000;background-image:none;font-size:11.5px}
+  .bar,.avatar,.proj .art{display:none}
+  .panel,.proj,.stat,.trait,.str .item{background:#fff;border-color:#bbb;color:#000}
+  .hero h1{color:#000;text-shadow:none}
+  .role b,.kick,.when,.lab{color:#000}
+  ul.d li,.lead,.str p,.trait{color:#000}
+  .proj{grid-template-columns:1fr;break-inside:avoid}
 }
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<header class="top">
+
+<header class="bar">
  <div class="wrap">
-  <div class="kicker">Resume</div>
-  <h1>조성민</h1>
-  <div class="role">Unity Client Programmer</div>
-  <ul class="contact">
-   <li><b>Github</b><a href="https://github.com/jsmjsm812">github.com/jsmjsm812</a></li>
-   <li><b>Email</b><a href="mailto:jsmjsm812@gmail.com">jsmjsm812@gmail.com</a></li>
-   <li><b>Phone</b><a href="tel:01052341665">010-5234-1665</a></li>
-   <li><b>Military</b>군필</li>
-   <li><b>Education</b>청운대학교 호텔조리식당경영학과(주전공)·멀티미디어학과(복수전공), 2020.03~2026.02</li>
-   <li><b>Portfolio</b><a href="https://jsmjsm812.github.io/portfolio/">jsmjsm812.github.io/portfolio</a></li>
-  </ul>
+  <a class="logo" href="#top"><i>CS</i><span>CHO SUNGMIN</span></a>
+  <nav>
+   <a href="#about">About</a><a href="#skill">Skills</a><a href="#intro">Introduction</a><a href="#exp">Experience</a><a href="#project">Projects</a>
+  </nav>
+  <span class="sp"></span>
+  <a class="pill ghost" href="https://jsmjsm812.github.io/portfolio/">포트폴리오</a>
+  <a class="pill solid" href="https://jsmjsm812.github.io/cover-letter/">자기소개서</a>
  </div>
 </header>
 
-<nav class="tabs">
- <div class="wrap">
-  <a href="#about">About Me</a><a href="#skill">Tool &amp; Skill</a><a href="#intro">Introduction</a><a href="#exp">Experience</a><a href="#project">Project</a>
-  <span class="sp"></span>
-  <a href="https://jsmjsm812.github.io/cover-letter/">자기소개서·경력기술서 ↗</a>
- </div>
-</nav>
+<main id="top">
+<div class="wrap">
 
-<main class="wrap">
+ <section class="hero">
+  <div class="grid">
+   <div>
+    <span class="tag">RESUME</span>
+    <h1>CHO<br>SUNGMIN</h1>
+    <div class="role"><b>Unity</b> Client Programmer</div>
+    <p class="lead">복잡한 규칙은 데이터로 분리하고 자동화로 관리합니다. 게임 다섯 편을 완주했고, 그중 『용사 때문에 레벨업』은 2026년 11월 6일 STOVE에 출시했습니다.</p>
+    <ul class="facts">
+     <li><b>GITHUB</b><a href="https://github.com/jsmjsm812">github.com/jsmjsm812</a></li>
+     <li><b>EMAIL</b><a href="mailto:jsmjsm812@gmail.com">jsmjsm812@gmail.com</a></li>
+     <li><b>PHONE</b><a href="tel:01052341665">010-5234-1665</a></li>
+     <li><b>MILITARY</b><span>군필</span></li>
+     <li class="wide"><b>SCHOOL</b><span>청운대학교 호텔조리식당경영학과(주전공)·멀티미디어학과(복수전공), 2020.03~2026.02</span></li>
+    </ul>
+   </div>
+   <div class="avatar"><img src="img/dev_character.webp" alt="조성민 픽셀아트 캐릭터"></div>
+  </div>
 
-<section id="about">
- <h2>About Me</h2>
- <div class="card">
-  <p>Unity 클라이언트 개발자 지망생 조성민입니다. “복잡한 규칙은 데이터로 분리하고 자동화로 관리한다”라는 원칙 아래 FSM · ScriptableObject 파이프라인 설계를 지향합니다. 두 편의 팀 프로젝트(소울라이크 액션 RPG · 라이프 시뮬 RPG)를 팀장 · 기획 · 클라이언트 개발 겸임으로 완주했고, 이후에는 개인 프로젝트로 PC 웨이브 서바이벌과 모바일 로그라이트 타워디펜스를 기획·개발·에디터 툴링까지 혼자 완주했습니다. 최근에는 5인 팀 프로젝트 ‘용사 때문에 레벨업’에서 마왕 성장 시스템(스킬·특성·증강·시너지)과 밸런스를 맡았고, 2026년 11월 6일 STOVE에 출시했습니다.</p>
-  <ul class="dots">
-   <li>상태·데이터가 폭발할 때 카테고리와 규칙부터 잡는, 구조에 민감한 개발자</li>
-   <li>코드 수정 없이 데이터만으로 콘텐츠를 확장하는 파이프라인을 선호하는 개발자</li>
-   <li>팀장·기획·개발을 겸임하며 스코프 축소 결정과 소통을 두려워하지 않는 개발자</li>
-   <li>개인 프로젝트를 기획부터 아트·에디터 툴링까지 혼자 완주해본, 책임 범위가 넓은 개발자</li>
-   <li>팀 프로젝트에서 남의 코드와 맞물리는 접점을 최소로 설계하는 개발자</li>
-  </ul>
- </div>
-</section>
+  <div class="stats">
+   <div class="stat"><div class="n">5<small>편</small></div><div class="l">완주한 게임<br>(팀 3 · 1인 2)</div></div>
+   <div class="stat"><div class="n">STOVE</div><div class="l">용사 때문에 레벨업<br>출시 2026.11.06</div></div>
+   <div class="stat"><div class="n">102</div><div class="l">내 커밋 (머지 제외)<br>PR 19개</div></div>
+   <div class="stat"><div class="n">134</div><div class="l">내가 만든 C# 파일<br>약 3만 줄</div></div>
+   <div class="stat"><div class="n">2<small>회</small></div><div class="l">팀장 경험<br>(2인 · 5인)</div></div>
+  </div>
+ </section>
 
-<section id="skill">
- <h2>Tool &amp; Skill</h2>
- <div class="card skills">
-  <div><h3>Language</h3><ul><li>C#</li><li>Python (밸런스 시뮬레이터·튜너)</li></ul></div>
-  <div><h3>Engine / Framework</h3><ul><li>Unity 6 (URP)</li><li>Animator Controller</li><li>Cinemachine</li><li>Animation Rigging</li><li>NavMesh (AI 경로·이동)</li><li>New Input System</li><li>ScriptableObject</li><li>FSM (Finite State Machine)</li><li>Editor Scripting</li></ul></div>
-  <div><h3>System / Architecture</h3><ul><li>데이터 주도 설계 (SO 기반)</li><li>15-state FSM · InterruptStack</li><li>JSON 암호화 세이브/로드</li><li>DateTime 기반 오프라인 정산</li><li>Dictionary 기반 정확 매칭</li><li>Singleton · Coroutine</li><li>FootIK · TTS 연동</li><li>오브젝트 풀링</li><li>순수 C# 로직 + 인터페이스 분리</li><li>밸런스 시트 → 에셋 생성 파이프라인</li></ul></div>
-  <div><h3>ETC</h3><ul><li>Git · GitHub</li><li>Plastic SCM</li><li>Notion</li><li>Mixamo</li><li>Android 빌드</li><li>Excel 밸런스 시트</li><li>Claude Code (AI 페어 프로그래밍)</li></ul></div>
- </div>
-</section>
+ <section class="s" id="about">
+  <div class="kick">ABOUT ME</div>
+  <h2>구조에 민감한 클라이언트 개발자</h2>
+  <div class="panel">
+   <p>Unity 클라이언트 개발자 지망생 조성민입니다. “복잡한 규칙은 데이터로 분리하고 자동화로 관리한다”라는 원칙 아래 FSM · ScriptableObject 파이프라인 설계를 지향합니다. 두 편의 팀 프로젝트(소울라이크 액션 RPG · 라이프 시뮬 RPG)를 팀장 · 기획 · 클라이언트 개발 겸임으로 완주했고, 이후에는 개인 프로젝트로 PC 웨이브 서바이벌과 모바일 로그라이트 타워디펜스를 기획·개발·에디터 툴링까지 혼자 완주했습니다. 최근에는 5인 팀 프로젝트 ‘용사 때문에 레벨업’에서 마왕 성장 시스템(스킬·특성·증강·시너지)과 밸런스를 맡았고, 2026년 11월 6일 STOVE에 출시했습니다.</p>
+   <div class="traits">
+    <div class="trait">상태·데이터가 폭발할 때 카테고리와 규칙부터 잡는, 구조에 민감한 개발자</div>
+    <div class="trait">코드 수정 없이 데이터만으로 콘텐츠를 확장하는 파이프라인을 선호하는 개발자</div>
+    <div class="trait">팀장·기획·개발을 겸임하며 스코프 축소 결정과 소통을 두려워하지 않는 개발자</div>
+    <div class="trait">개인 프로젝트를 기획부터 아트·에디터 툴링까지 혼자 완주해본, 책임 범위가 넓은 개발자</div>
+    <div class="trait">팀 프로젝트에서 남의 코드와 맞물리는 접점을 최소로 설계하는 개발자</div>
+   </div>
+  </div>
+ </section>
 
-<section id="intro">
- <h2>Introduction</h2>
- <div class="card">
-  <h3>성장 과정</h3>
-  <p>처음부터 게임 개발자를 꿈꿨던 것은 아닙니다. 청운대학교에서 호텔조리식당경영학과와 멀티미디어학과를 복수전공하며, 두 분야에서 얻은 감각이 나중에 모두 개발로 이어졌습니다. 조리에서 배운 것은 “정해진 재료와 정해진 시간 안에서 예측 가능한 결과를 만들어야 한다”는 감각이었고, 이 습관은 지금도 유효하게 남아 있습니다.</p>
-  <p>멀티미디어 실습을 하며 화면 속 콘텐츠를 직접 만드는 일에 재미를 붙였고, 이 흥미를 게임이라는 형태로 확장하고 싶어 넥스트러너스 게임개발 초격차 캠프에 진학했습니다. 캠프에서는 두 편의 팀 프로젝트를 팀장 겸 기획·전투 파트로 이끌었고, “만들고 싶은 게 명확한 사람”에서 “팀이 함께 완성할 수 있게 판을 짜는 사람” 쪽으로 조금씩 자리를 옮겨왔습니다.</p>
- </div>
- <div class="card strength">
-  <h3>본인의 강점</h3>
-  <div class="label">① 본질 · 유저 입장에서 감각을 조정하는 습관</div>
-  <p>개발자의 편의보다 “이 순간 유저가 어떻게 느끼는가”를 기준으로 감각적인 파라미터를 결정해 왔습니다. LAST GLADIATOR의 패링을 0.2초로 정한 것, 위치 크로니클 낚시의 “스치듯 회복” 처리가 그 예입니다.</p>
-  <div class="label">② 다름 · 새 룰을 빠르게 시도할 수 있는 구조 만들기</div>
-  <p>LAST GLADIATOR의 EnemyStageData SO(40+ 필드), 위치 크로니클의 스킬 SO 67종 · 아이템 200+종에 이어, 작은 왕국에서는 수호자 10종·침입자 8종을 전부 ScriptableObject로 분리하고 에디터 메뉴 58개로 자동화했습니다. 용사 때문에 레벨업에서는 스킬 19종·증강 30종·특성 40노드를 ScriptableObject로 두고 밸런스 시트에서 에셋을 생성하는 파이프라인으로 연결했습니다.</p>
-  <div class="label">③ 빠름 · 짧은 일정 안에 완주하는 경험</div>
-  <p>메이플 서바이버는 1인 개발로 20웨이브 서바이벌을 완성했고, LAST GLADIATOR는 2인 4주, 위치 크로니클은 5인 7주, 작은 왕국은 1인 2주 만에 각각 완주했습니다. 용사 때문에 레벨업은 5인 6주 일정으로 진행해 2026년 11월 6일 STOVE에 출시했습니다. 팀 여부와 무관하게 유지되는 저만의 작업 리듬입니다.</p>
- </div>
-</section>
+ <section class="s" id="skill">
+  <div class="kick">TOOL &amp; SKILL</div>
+  <h2>쓰는 도구와 설계 방식</h2>
+  <div class="skills">
+   <div class="panel"><h3>LANGUAGE</h3><div class="chips"><span class="chip hot">C#</span><span class="chip">Python (밸런스 시뮬레이터·튜너)</span></div></div>
+   <div class="panel"><h3>ENGINE / FRAMEWORK</h3><div class="chips"><span class="chip hot">Unity 6 (URP)</span><span class="chip hot">ScriptableObject</span><span class="chip hot">FSM</span><span class="chip">Animator Controller</span><span class="chip">Cinemachine</span><span class="chip">Animation Rigging</span><span class="chip">NavMesh (AI 경로·이동)</span><span class="chip">New Input System</span><span class="chip hot">Editor Scripting</span></div></div>
+   <div class="panel"><h3>SYSTEM / ARCHITECTURE</h3><div class="chips"><span class="chip hot">데이터 주도 설계 (SO 기반)</span><span class="chip hot">15-state FSM · InterruptStack</span><span class="chip">JSON 암호화 세이브/로드</span><span class="chip">DateTime 기반 오프라인 정산</span><span class="chip">Dictionary 기반 정확 매칭</span><span class="chip">Singleton · Coroutine</span><span class="chip">FootIK · TTS 연동</span><span class="chip">오브젝트 풀링</span><span class="chip">순수 C# 로직 + 인터페이스 분리</span><span class="chip hot">밸런스 시트 → 에셋 생성 파이프라인</span></div></div>
+   <div class="panel"><h3>ETC</h3><div class="chips"><span class="chip">Git · GitHub</span><span class="chip">Plastic SCM</span><span class="chip">Notion</span><span class="chip">Mixamo</span><span class="chip">Android 빌드</span><span class="chip">Excel 밸런스 시트</span><span class="chip hot">Claude Code (AI 페어 프로그래밍)</span></div></div>
+  </div>
+ </section>
 
-<section id="exp">
- <h2>Experience</h2>
- <div class="card">
-  <div class="proj-head"><h3>AI를 활용한 차세대 스마트 게임 개발자 양성과정 5기</h3><span class="meta">2026.02.05 ~ 2026.08.18</span></div>
-  <div class="meta">넥스트러너스평생교육시설 · 5회차</div>
-  <ul class="dots">
-   <li>Unity/C# 기반 게임 클라이언트 개발 전 과정 수료</li>
-   <li>팀 프로젝트를 통해 기획–구현–디버깅–포트폴리오화까지 실무 사이클 경험</li>
-   <li>두 프로젝트 모두 팀장 · 기획 · 클라이언트 개발 겸임</li>
-  </ul>
- </div>
- <div class="card">
-  <div class="proj-head"><h3>오즈게임랩 2기 · 1팀 프로젝트 ‘용사 때문에 레벨업’</h3><span class="meta">5인 팀 · 2026.09.07 ~ 2026.10.16 (6주)</span></div>
-  <ul class="dots">
-   <li>하루 3시간 · 주 5일 · 6주 일정의 5인 팀 프로젝트 (코어 루프·그리드 2인 / 유닛 전투 1인 / UI·아트·사운드 1인 / 본인)</li>
-   <li>마왕 성장 시스템 전체 · 밸런스 · 인게임 연출 · QA 담당, dev 브랜치에서 분기해 PR(19개)로 통합하고 팀원 리뷰를 거쳐 병합</li>
-  </ul>
- </div>
-</section>
+ <section class="s" id="intro">
+  <div class="kick">INTRODUCTION</div>
+  <h2>성장 과정과 강점</h2>
+  <div class="panel">
+   <h3>성장 과정</h3>
+   <p>처음부터 게임 개발자를 꿈꿨던 것은 아닙니다. 청운대학교에서 호텔조리식당경영학과와 멀티미디어학과를 복수전공하며, 두 분야에서 얻은 감각이 나중에 모두 개발로 이어졌습니다. 조리에서 배운 것은 “정해진 재료와 정해진 시간 안에서 예측 가능한 결과를 만들어야 한다”는 감각이었고, 이 습관은 지금도 유효하게 남아 있습니다.</p>
+   <p>멀티미디어 실습을 하며 화면 속 콘텐츠를 직접 만드는 일에 재미를 붙였고, 이 흥미를 게임이라는 형태로 확장하고 싶어 넥스트러너스 게임개발 초격차 캠프에 진학했습니다. 캠프에서는 두 편의 팀 프로젝트를 팀장 겸 기획·전투 파트로 이끌었고, “만들고 싶은 게 명확한 사람”에서 “팀이 함께 완성할 수 있게 판을 짜는 사람” 쪽으로 조금씩 자리를 옮겨왔습니다.</p>
+  </div>
+  <div class="str">
+   <div class="item"><div class="no">01</div><div><h4>본질 · 유저 입장에서 감각을 조정하는 습관</h4><p>개발자의 편의보다 “이 순간 유저가 어떻게 느끼는가”를 기준으로 감각적인 파라미터를 결정해 왔습니다. LAST GLADIATOR의 패링을 0.2초로 정한 것, 위치 크로니클 낚시의 “스치듯 회복” 처리가 그 예입니다.</p></div></div>
+   <div class="item"><div class="no">02</div><div><h4>다름 · 새 룰을 빠르게 시도할 수 있는 구조 만들기</h4><p>LAST GLADIATOR의 EnemyStageData SO(40+ 필드), 위치 크로니클의 스킬 SO 67종 · 아이템 200+종에 이어, 작은 왕국에서는 수호자 10종·침입자 8종을 전부 ScriptableObject로 분리하고 에디터 메뉴 58개로 자동화했습니다. 용사 때문에 레벨업에서는 스킬 19종·증강 30종·특성 40노드를 ScriptableObject로 두고 밸런스 시트에서 에셋을 생성하는 파이프라인으로 연결했습니다.</p></div></div>
+   <div class="item"><div class="no">03</div><div><h4>빠름 · 짧은 일정 안에 완주하는 경험</h4><p>메이플 서바이버는 1인 개발로 20웨이브 서바이벌을 완성했고, LAST GLADIATOR는 2인 4주, 위치 크로니클은 5인 7주, 작은 왕국은 1인 2주 만에 각각 완주했습니다. 용사 때문에 레벨업은 5인 6주 일정으로 진행해 2026년 11월 6일 STOVE에 출시했습니다. 팀 여부와 무관하게 유지되는 저만의 작업 리듬입니다.</p></div></div>
+  </div>
+ </section>
 
-<section id="project">
- <h2>Project</h2>
+ <section class="s" id="exp">
+  <div class="kick">EXPERIENCE</div>
+  <h2>경력 · 교육</h2>
+  <div class="tl">
+   <div class="it panel">
+    <div class="row"><h3>오즈게임랩 2기 · 1팀 프로젝트 ‘용사 때문에 레벨업’</h3><span class="when">2026.09.07 ~ 10.16 (6주)</span></div>
+    <div class="sub">5인 팀 프로젝트</div>
+    <ul class="d">
+     <li>하루 3시간 · 주 5일 · 6주 일정의 5인 팀 프로젝트 (코어 루프·그리드 2인 / 유닛 전투 1인 / UI·아트·사운드 1인 / 본인)</li>
+     <li>마왕 성장 시스템 전체 · 밸런스 · 인게임 연출 · QA 담당, dev 브랜치에서 분기해 PR(19개)로 통합하고 팀원 리뷰를 거쳐 병합</li>
+    </ul>
+   </div>
+   <div class="it panel">
+    <div class="row"><h3>AI를 활용한 차세대 스마트 게임 개발자 양성과정 5기</h3><span class="when">2026.02.05 ~ 08.18</span></div>
+    <div class="sub">넥스트러너스평생교육시설 · 5회차</div>
+    <ul class="d">
+     <li>Unity/C# 기반 게임 클라이언트 개발 전 과정 수료</li>
+     <li>팀 프로젝트를 통해 기획–구현–디버깅–포트폴리오화까지 실무 사이클 경험</li>
+     <li>두 프로젝트 모두 팀장 · 기획 · 클라이언트 개발 겸임</li>
+    </ul>
+   </div>
+  </div>
+ </section>
 
- <article class="card" id="p-lvup">
-  <div class="proj-head"><h3>용사 때문에 레벨업<span class="badge">STOVE 출시 2026.11.06</span></h3><span class="en">YONGSA LEVEL-UP</span></div>
-  <div class="meta">오즈게임랩 2기 5인 팀 프로젝트 · 2026.09.07 ~ 10.16 (6주)</div>
-  <div class="links"><a href="https://store.onstove.com/ko/games/106167">STOVE ↗</a><a href="https://github.com/OZ-GAME-LAB/OZGL2_1">github.com/OZ-GAME-LAB/OZGL2_1 ↗</a></div>
-  <div class="rolebox">마왕 성장 시스템 · 밸런스 · 인게임 연출/UX · QA (5인 팀)</div>
-  <div class="label">기획 · 밸런스</div>
-  <ul class="dots">
-   <li>역(逆) 타워 디펜스(플레이어가 마왕) 성장 축 설계 — 스킬 19종 · 특성 40노드 · 증강 30종 · 시너지 12종, LP/SP 이중 재화</li>
-   <li>밸런스 시트를 소유하고, 시트→에셋 생성기·전투 시뮬레이터·물량 자동 튜너(Python)로 수치 조정 (합성 배율 2성 ×2.1→×1.7, 3성 ×4.5→×3.2)</li>
-  </ul>
-  <div class="label">Systems</div>
-  <ul class="dots">
-   <li>스킬(봉인 해제·장착·조준 표시), 마왕 레벨업(XP→LP), 특성 트리, 증강(런 한정·3티어), 시너지(직업 6종+조합 6종)</li>
-   <li>성장 로직을 순수 C# 클래스와 인터페이스(Contracts)로 분리해 팀원 씬 완성 전에 샌드박스에서 먼저 완성, 실전투 통합 시 CombatModifierHub로 연결</li>
-  </ul>
-  <div class="label">UX · 통합</div>
-  <ul class="dots">
-   <li>튜토리얼, 오프닝 스토리, 로딩 화면, 웨이브 배너, 카메라 자동 구도, 이어하기·난이도 잠금·스테이지 기록·마왕군 해금</li>
-   <li>저장소 기준 내 커밋 102개(머지 제외) · PR 19개 · C# 134파일 약 3만 줄, dev 브랜치 PR·리뷰 기반 협업</li>
-  </ul>
-  <div class="label">Problem Solving</div>
-  <ul class="dots">
-   <li>“버프 스킬이 연출만 나옴” — 스킬·유닛 간 문자열 키(AttackSpeed/attackSpeed) 불일치가 원인, 변환 한 곳으로 통일</li>
-   <li>“마왕군 강화가 용사에게도 적용” — 보정 허브 키가 직업뿐이라 발생, (직업, 진영) 키로 재설계</li>
-   <li>“배너가 결과창과 동시에 뜸” — 팀원의 비동기 진행 코드를 고치지 않고 대기 훅 한 줄씩만 삽입, 배너가 꺼져 있으면 즉시 통과</li>
-  </ul>
-  <div class="label">AI 협업</div>
-  <ul class="dots"><li>Claude Code 활용 — 설계·밸런스·플레이 검증은 직접, 구현·도구 코드는 AI와 분업 (머지 제외 커밋 102개 중 98개에 AI 공동 작성 표기)</li></ul>
-  <div class="chips"><span class="chip">Unity 6</span><span class="chip">C#</span><span class="chip">URP</span><span class="chip">New Input System</span><span class="chip">ScriptableObject</span><span class="chip">Python</span><span class="chip">Editor Scripting</span><span class="chip">Git·GitHub</span><span class="chip">Claude Code</span></div>
- </article>
+ <section class="s" id="project">
+  <div class="kick">PROJECTS</div>
+  <h2>완주한 게임 다섯 편</h2>
 
- <article class="card" id="p-tk">
-  <div class="proj-head"><h3>작은 왕국</h3><span class="en">TINY KINGDOM</span></div>
-  <div class="meta">개인 프로젝트 (1인 개발) · 2026.08.25 ~ 09.06</div>
-  <div class="links"><a href="https://github.com/jsmjsm812/WitchHour">github.com/jsmjsm812/WitchHour ↗</a></div>
-  <div class="rolebox">기획 · 클라이언트 개발 · 아트 파이프라인 · 에디터 툴링 전담 (1인 개발)</div>
-  <div class="label">기획</div>
-  <ul class="dots">
-   <li>모바일(Android, 세로 9:16) 로그라이트 타워디펜스 컨셉(소환+자동합성, 롤토체스식 준비/전투 루프) 설계</li>
-   <li>수호자 10종·침입자 8종·구역 3곳 데이터 설계, 플레이 피드백 기반 밸런스 6회 이상 반복 조정</li>
-  </ul>
-  <div class="label">Systems</div>
-  <ul class="dots">
-   <li>웨이브 스포너·오브젝트 풀링 — 생존 판정과 연출 분리로 코루틴 정지발 무한 대기 버그 해결</li>
-   <li>성급별 능력 확장 구조(AttackType별 배열 조회), 웨이브 체크포인트 세이브(Registry 간접 참조)</li>
-   <li>CanvasScaler 동적 매칭 전환 기반 레터박스, 에디터 메뉴 58개로 씬 구성·아트·디버그 툴 자동화</li>
-  </ul>
-  <div class="label">Problem Solving</div>
-  <ul class="dots">
-   <li>“웨이브 종료 후 게임 멈춤” — 코루틴이 오브젝트 비활성화 시 콜백 없이 멈추는 특성이 원인, 판정을 연출과 분리해 해결</li>
-   <li>“몬스터가 안 죽어 보임” — HP 상향은 무효, 진짜 원인은 공격 타이머 고정값발 전원 동시발사, 무작위 위상 초기화로 해결</li>
-  </ul>
-  <div class="label">AI 협업</div>
-  <ul class="dots"><li>Claude Code 활용 — 기획·검증·밸런스는 직접, 구현·정적분석은 AI로 분업, 결정 사항을 CLAUDE.md에 문서화</li></ul>
-  <div class="chips"><span class="chip">Unity 6</span><span class="chip">C#</span><span class="chip">UGUI</span><span class="chip">ScriptableObject</span><span class="chip">Editor Scripting</span><span class="chip">오브젝트 풀링</span><span class="chip">JSON</span><span class="chip">Git·GitHub</span><span class="chip">Claude Code</span></div>
- </article>
+  <article class="proj">
+   <div class="art"><img src="img/mawang_title.webp" alt="용사 때문에 레벨업 타이틀 화면" loading="lazy"></div>
+   <div class="body">
+    <h3><span class="en">YONGSA LEVEL-UP</span>용사 때문에 레벨업<span class="badge">STOVE 출시 2026.11.06</span></h3>
+    <div class="sub">오즈게임랩 2기 5인 팀 프로젝트 · 2026.09.07 ~ 10.16 (6주)</div>
+    <div class="links"><a href="https://store.onstove.com/ko/games/106167">STOVE ↗</a><a href="https://github.com/OZ-GAME-LAB/OZGL2_1">github.com/OZ-GAME-LAB/OZGL2_1 ↗</a></div>
+    <div class="role-box">마왕 성장 시스템 · 밸런스 · 인게임 연출/UX · QA (5인 팀)</div>
+    <div class="lab">기획 · 밸런스</div>
+    <ul class="d">
+     <li>역(逆) 타워 디펜스(플레이어가 마왕) 성장 축 설계 — 스킬 19종 · 특성 40노드 · 증강 30종 · 시너지 12종, LP/SP 이중 재화</li>
+     <li>밸런스 시트를 소유하고, 시트→에셋 생성기·전투 시뮬레이터·물량 자동 튜너(Python)로 수치 조정 (합성 배율 2성 ×2.1→×1.7, 3성 ×4.5→×3.2)</li>
+    </ul>
+    <div class="lab">SYSTEMS</div>
+    <ul class="d">
+     <li>스킬(봉인 해제·장착·조준 표시), 마왕 레벨업(XP→LP), 특성 트리, 증강(런 한정·3티어), 시너지(직업 6종+조합 6종)</li>
+     <li>성장 로직을 순수 C# 클래스와 인터페이스(Contracts)로 분리해 팀원 씬 완성 전에 샌드박스에서 먼저 완성, 실전투 통합 시 CombatModifierHub로 연결</li>
+    </ul>
+    <div class="lab">UX · 통합</div>
+    <ul class="d">
+     <li>튜토리얼, 오프닝 스토리, 로딩 화면, 웨이브 배너, 카메라 자동 구도, 이어하기·난이도 잠금·스테이지 기록·마왕군 해금</li>
+     <li>저장소 기준 내 커밋 102개(머지 제외) · PR 19개 · C# 134파일 약 3만 줄, dev 브랜치 PR·리뷰 기반 협업</li>
+    </ul>
+    <div class="lab">PROBLEM SOLVING</div>
+    <ul class="d">
+     <li>“버프 스킬이 연출만 나옴” — 스킬·유닛 간 문자열 키(AttackSpeed/attackSpeed) 불일치가 원인, 변환 한 곳으로 통일</li>
+     <li>“마왕군 강화가 용사에게도 적용” — 보정 허브 키가 직업뿐이라 발생, (직업, 진영) 키로 재설계</li>
+     <li>“배너가 결과창과 동시에 뜸” — 팀원의 비동기 진행 코드를 고치지 않고 대기 훅 한 줄씩만 삽입, 배너가 꺼져 있으면 즉시 통과</li>
+    </ul>
+    <div class="lab">AI 협업</div>
+    <ul class="d"><li>Claude Code 활용 — 설계·밸런스·플레이 검증은 직접, 구현·도구 코드는 AI와 분업 (머지 제외 커밋 102개 중 98개에 AI 공동 작성 표기)</li></ul>
+    <div class="chips"><span class="chip">Unity 6</span><span class="chip">C#</span><span class="chip">URP</span><span class="chip">New Input System</span><span class="chip">ScriptableObject</span><span class="chip">Python</span><span class="chip">Editor Scripting</span><span class="chip">Git·GitHub</span><span class="chip">Claude Code</span></div>
+   </div>
+  </article>
 
- <article class="card" id="p-wc">
-  <div class="proj-head"><h3>Witch Chronicle</h3><span class="en">위치 크로니클</span></div>
-  <div class="meta">넥스트러너스 5인 팀 프로젝트 · 2026.06.29 ~ 08.14 (약 7주)</div>
-  <div class="links"><a href="https://youtu.be/kNYvXD6YcRg">youtu.be/kNYvXD6YcRg ↗</a></div>
-  <div class="rolebox">팀장 · 라이프 시스템 파트 기획 · 클라이언트 구현</div>
-  <div class="label">기획 · 팀 리딩</div>
-  <ul class="dots">
-   <li>마녀학교 라이프 시뮬 + 6속성 턴제 RPG 컨셉, 라이프 시스템(파밍·낚시·연금술) 전면 기획</li>
-   <li>5인 팀 GitHub PR 관리, 폴더 규칙으로 파트별 소유권 정립</li>
-  </ul>
-  <div class="label">Life System / Data</div>
-  <ul class="dots">
-   <li>IdleFarming — DateTime 기반 오프라인 정산, Fishing 홀드 미니게임, Alchemy 정확 매칭</li>
-   <li>스킬 SO 67종 · 라이프 아이템 200+종 ID 체계, 자동 등록·검증 파이프라인</li>
-  </ul>
-  <div class="chips"><span class="chip">Unity</span><span class="chip">C#</span><span class="chip">ScriptableObject</span><span class="chip">DateTime</span><span class="chip">Dictionary</span><span class="chip">Cinemachine</span><span class="chip">Git·Git LFS</span></div>
- </article>
+  <article class="proj">
+   <div class="art"><img src="img/kingdom_title.webp" alt="작은 왕국 타이틀 화면" loading="lazy"></div>
+   <div class="body">
+    <h3><span class="en">TINY KINGDOM</span>작은 왕국</h3>
+    <div class="sub">개인 프로젝트 (1인 개발) · 2026.08.25 ~ 09.06</div>
+    <div class="links"><a href="https://github.com/jsmjsm812/WitchHour">github.com/jsmjsm812/WitchHour ↗</a></div>
+    <div class="role-box">기획 · 클라이언트 개발 · 아트 파이프라인 · 에디터 툴링 전담 (1인 개발)</div>
+    <div class="lab">기획</div>
+    <ul class="d">
+     <li>모바일(Android, 세로 9:16) 로그라이트 타워디펜스 컨셉(소환+자동합성, 롤토체스식 준비/전투 루프) 설계</li>
+     <li>수호자 10종·침입자 8종·구역 3곳 데이터 설계, 플레이 피드백 기반 밸런스 6회 이상 반복 조정</li>
+    </ul>
+    <div class="lab">SYSTEMS</div>
+    <ul class="d">
+     <li>웨이브 스포너·오브젝트 풀링 — 생존 판정과 연출 분리로 코루틴 정지발 무한 대기 버그 해결</li>
+     <li>성급별 능력 확장 구조(AttackType별 배열 조회), 웨이브 체크포인트 세이브(Registry 간접 참조)</li>
+     <li>CanvasScaler 동적 매칭 전환 기반 레터박스, 에디터 메뉴 58개로 씬 구성·아트·디버그 툴 자동화</li>
+    </ul>
+    <div class="lab">PROBLEM SOLVING</div>
+    <ul class="d">
+     <li>“웨이브 종료 후 게임 멈춤” — 코루틴이 오브젝트 비활성화 시 콜백 없이 멈추는 특성이 원인, 판정을 연출과 분리해 해결</li>
+     <li>“몬스터가 안 죽어 보임” — HP 상향은 무효, 진짜 원인은 공격 타이머 고정값발 전원 동시발사, 무작위 위상 초기화로 해결</li>
+    </ul>
+    <div class="lab">AI 협업</div>
+    <ul class="d"><li>Claude Code 활용 — 기획·검증·밸런스는 직접, 구현·정적분석은 AI로 분업, 결정 사항을 CLAUDE.md에 문서화</li></ul>
+    <div class="chips"><span class="chip">Unity 6</span><span class="chip">C#</span><span class="chip">UGUI</span><span class="chip">ScriptableObject</span><span class="chip">Editor Scripting</span><span class="chip">오브젝트 풀링</span><span class="chip">JSON</span><span class="chip">Git·GitHub</span><span class="chip">Claude Code</span></div>
+   </div>
+  </article>
 
- <article class="card" id="p-lg">
-  <div class="proj-head"><h3>LAST GLADIATOR</h3><span class="en">라스트 글래디에이터</span></div>
-  <div class="meta">넥스트러너스 2인 팀 프로젝트 · 2026.05.28 ~ 06.26 (약 4주)</div>
-  <div class="links"><a href="https://youtu.be/g3t2Uxi8HEQ">youtu.be/g3t2Uxi8HEQ ↗</a></div>
-  <div class="rolebox">팀장 · 기획 · 클라이언트 (Player·Enemy 전투 전담)</div>
-  <div class="label">기획 · 팀 리딩</div>
-  <ul class="dots">
-   <li>로마 콜로세움 배경 소울라이크 컨셉·전투 규칙 기획, 4주 마일스톤 관리</li>
-   <li>Behavior Tree → FSM 등 기술 스택 의사결정 주도, 초기 스코프를 패링 중심 근접 전투로 축소 설득</li>
-  </ul>
-  <div class="label">Player / Enemy Combat</div>
-  <ul class="dots">
-   <li>Parry System(0.2초 판정) → 스태거+넉백 카운터, SkillData SO 2-Phase Cast 파이프라인</li>
-   <li>15-state FSM Enemy AI, EnemyStageData SO(40+ 필드), Cinemachine KillCam · FootIK</li>
-  </ul>
-  <div class="chips"><span class="chip">Unity</span><span class="chip">C#</span><span class="chip">ScriptableObject</span><span class="chip">FSM</span><span class="chip">Cinemachine</span><span class="chip">JSON</span><span class="chip">Plastic SCM</span></div>
- </article>
+  <article class="proj">
+   <div class="art"><img src="img/wc_title.webp" alt="위치 크로니클 타이틀 화면" loading="lazy"></div>
+   <div class="body">
+    <h3><span class="en">WITCH CHRONICLE</span>Witch Chronicle<span class="badge">5인 팀장</span></h3>
+    <div class="sub">넥스트러너스 5인 팀 프로젝트 · 2026.06.29 ~ 08.14 (약 7주)</div>
+    <div class="links"><a href="https://youtu.be/kNYvXD6YcRg">플레이 영상 ↗</a></div>
+    <div class="role-box">팀장 · 라이프 시스템 파트 기획 · 클라이언트 구현</div>
+    <div class="lab">기획 · 팀 리딩</div>
+    <ul class="d">
+     <li>마녀학교 라이프 시뮬 + 6속성 턴제 RPG 컨셉, 라이프 시스템(파밍·낚시·연금술) 전면 기획</li>
+     <li>5인 팀 GitHub PR 관리, 폴더 규칙으로 파트별 소유권 정립</li>
+    </ul>
+    <div class="lab">LIFE SYSTEM / DATA</div>
+    <ul class="d">
+     <li>IdleFarming — DateTime 기반 오프라인 정산, Fishing 홀드 미니게임, Alchemy 정확 매칭</li>
+     <li>스킬 SO 67종 · 라이프 아이템 200+종 ID 체계, 자동 등록·검증 파이프라인</li>
+    </ul>
+    <div class="chips"><span class="chip">Unity</span><span class="chip">C#</span><span class="chip">ScriptableObject</span><span class="chip">DateTime</span><span class="chip">Dictionary</span><span class="chip">Cinemachine</span><span class="chip">Git·Git LFS</span></div>
+   </div>
+  </article>
 
- <article class="card" id="p-ms">
-  <div class="proj-head"><h3>메이플 서바이버</h3><span class="en">MAPLE SURVIVOR</span></div>
-  <div class="meta">개인 프로젝트 (1인 개발) · 2026.04</div>
-  <div class="links"><a href="https://github.com/jsmjsm812/Maple-Survivor_jsm">github.com/jsmjsm812/Maple-Survivor_jsm ↗</a></div>
-  <div class="rolebox">기획 · 클라이언트 개발 · 밸런싱 · 빌드 (1인 개발)</div>
-  <div class="label">기획</div>
-  <ul class="dots">
-   <li>브로타토에서 영감을 받은 PC 웨이브 서바이벌 컨셉(이동만 직접, 무기는 자동 발사)과 20웨이브 · 보스 2종 구성</li>
-   <li>성장 구조 설계: 웨이브 사이 상점에서 무기 구매·판매·결합(최대 6개 장착), 레벨업 능력치 3택 1(11종), 첫 캐릭터 클리어 시 두 번째 캐릭터 해금</li>
-  </ul>
-  <div class="label">Systems</div>
-  <ul class="dots"><li>발사 방식이 다른 무기 5종류(시작 무기 10종)와 티어별 피해, 웨이브 진행·보스 패턴(웨이브 10 · 20), 옵션·저장(PlayerPrefs) 구현</li></ul>
-  <div class="label">AI 협업</div>
-  <ul class="dots"><li>Claude Code 활용, 맵 타일·소품 일부는 외부 에셋 패키지, 메이플스토리 몬스터를 소재로 사용</li></ul>
-  <div class="chips"><span class="chip">Unity 6</span><span class="chip">C#</span><span class="chip">ScriptableObject</span><span class="chip">2D Physics</span><span class="chip">TextMeshPro</span><span class="chip">New Input System</span><span class="chip">Git·GitHub</span><span class="chip">Claude Code</span></div>
- </article>
-</section>
+  <article class="proj">
+   <div class="art"><img src="img/lg_title.webp" alt="LAST GLADIATOR 타이틀 화면" loading="lazy"></div>
+   <div class="body">
+    <h3><span class="en">LAST GLADIATOR</span>LAST GLADIATOR<span class="badge">2인 팀장</span></h3>
+    <div class="sub">넥스트러너스 2인 팀 프로젝트 · 2026.05.28 ~ 06.26 (약 4주)</div>
+    <div class="links"><a href="https://youtu.be/g3t2Uxi8HEQ">플레이 영상 ↗</a></div>
+    <div class="role-box">팀장 · 기획 · 클라이언트 (Player·Enemy 전투 전담)</div>
+    <div class="lab">기획 · 팀 리딩</div>
+    <ul class="d">
+     <li>로마 콜로세움 배경 소울라이크 컨셉·전투 규칙 기획, 4주 마일스톤 관리</li>
+     <li>Behavior Tree → FSM 등 기술 스택 의사결정 주도, 초기 스코프를 패링 중심 근접 전투로 축소 설득</li>
+    </ul>
+    <div class="lab">PLAYER / ENEMY COMBAT</div>
+    <ul class="d">
+     <li>Parry System(0.2초 판정) → 스태거+넉백 카운터, SkillData SO 2-Phase Cast 파이프라인</li>
+     <li>15-state FSM Enemy AI, EnemyStageData SO(40+ 필드), Cinemachine KillCam · FootIK</li>
+    </ul>
+    <div class="chips"><span class="chip">Unity</span><span class="chip">C#</span><span class="chip">ScriptableObject</span><span class="chip">FSM</span><span class="chip">Cinemachine</span><span class="chip">JSON</span><span class="chip">Plastic SCM</span></div>
+   </div>
+  </article>
+
+  <article class="proj">
+   <div class="art"><img src="img/maple_title.webp" alt="메이플 서바이버 타이틀 화면" loading="lazy"></div>
+   <div class="body">
+    <h3><span class="en">MAPLE SURVIVOR</span>메이플 서바이버</h3>
+    <div class="sub">개인 프로젝트 (1인 개발) · 2026.04</div>
+    <div class="links"><a href="https://github.com/jsmjsm812/Maple-Survivor_jsm">github.com/jsmjsm812/Maple-Survivor_jsm ↗</a></div>
+    <div class="role-box">기획 · 클라이언트 개발 · 밸런싱 · 빌드 (1인 개발)</div>
+    <div class="lab">기획</div>
+    <ul class="d">
+     <li>브로타토에서 영감을 받은 PC 웨이브 서바이벌 컨셉(이동만 직접, 무기는 자동 발사)과 20웨이브 · 보스 2종 구성</li>
+     <li>성장 구조 설계: 웨이브 사이 상점에서 무기 구매·판매·결합(최대 6개 장착), 레벨업 능력치 3택 1(11종), 첫 캐릭터 클리어 시 두 번째 캐릭터 해금</li>
+    </ul>
+    <div class="lab">SYSTEMS</div>
+    <ul class="d"><li>발사 방식이 다른 무기 5종류(시작 무기 10종)와 티어별 피해, 웨이브 진행·보스 패턴(웨이브 10 · 20), 옵션·저장(PlayerPrefs) 구현</li></ul>
+    <div class="lab">AI 협업</div>
+    <ul class="d"><li>Claude Code 활용, 맵 타일·소품 일부는 외부 에셋 패키지, 메이플스토리 몬스터를 소재로 사용</li></ul>
+    <div class="chips"><span class="chip">Unity 6</span><span class="chip">C#</span><span class="chip">ScriptableObject</span><span class="chip">2D Physics</span><span class="chip">TextMeshPro</span><span class="chip">New Input System</span><span class="chip">Git·GitHub</span><span class="chip">Claude Code</span></div>
+   </div>
+  </article>
+ </section>
+
+</div>
 </main>
 
 <footer>
  <div class="wrap">
-  <button class="theme" id="theme" type="button">테마 전환</button>
-  <p style="margin-top:16px">조성민 · Unity Client Programmer · <a href="mailto:jsmjsm812@gmail.com">jsmjsm812@gmail.com</a> · <a href="https://jsmjsm812.github.io/portfolio/">포트폴리오</a> · <a href="https://jsmjsm812.github.io/cover-letter/">자기소개서 및 경력기술서</a></p>
+  조성민 · Unity Client Programmer · <a href="mailto:jsmjsm812@gmail.com">jsmjsm812@gmail.com</a> · <a href="https://jsmjsm812.github.io/portfolio/">포트폴리오</a> · <a href="https://jsmjsm812.github.io/cover-letter/">자기소개서 및 경력기술서</a>
  </div>
 </footer>
-<script>
-(function(){
-  var b=document.getElementById('theme'), r=document.documentElement;
-  function cur(){ var t=r.getAttribute('data-theme'); if(t) return t; return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'; }
-  b.addEventListener('click',function(){ r.setAttribute('data-theme', cur()==='dark'?'light':'dark'); });
-})();
-</script>
 </body>
 </html>
